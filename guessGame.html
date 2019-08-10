@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Magic</title>
+	<meta charset="utf-8">
+	<meta name='viewport' content="width=device-width intial-scale=1.0">
+	<style type="text/css">
+		body{margin-top:50px; }
+		div{color: white;
+		    min-width:30%;
+		    height: 200px;
+		    box-sizing: border-box;
+		    text-align: center;
+		    display: inline-block;
+		    padding-top: 100px;}
+	    .first{background-color: red;}
+	    .second{background-color: blue;}
+	    .third{background-color: green;}
+	    button{text-align: center;
+	    	   font-size: 2em;
+	          color: white;
+	          background-color: green;
+	          border: none;
+	          margin: auto;
+	          display: block;
+	          width:200px;
+	          height: 50px;}
+	    .btn{display: none;}
+	    
+	    
+        /*section{
+            position:absolute;
+            width:100%; 
+            height:120%;
+        	background-image:repeating-radial-gradient(ellipse,blue,indigo,violet 20%);
+        	display: none;
+        	transition: width 3s;
+        	*/
+
+        }
+	</style>
+</head>
+<body>
+  <section></section>
+  <div class="first">below 5</div>
+  <div class="second">5-10</div>
+  <div class="third">Above 10</div>
+  <h3 style="font-size: 2em; margin-bottom: 100px; ">
+  	<pre>
+  		Magic!
+1.Guess a number!and pick a color accordingly.(e.g 2 and red)
+2.Multiply it by 2.
+3.Add <span></span> to it.
+4.Divide it by 2.
+5.Subtract the number you guessed from it(e.g result-2).
+I'm gonna guess the color u picked...
+    </pre>
+    </h3>
+  <button class='btn0' onclick="handler1()">Next</button>
+  
+  <script type="text/javascript">
+  	let num=document.querySelector('span').innerHTML=Math.ceil((Math.random()*10)*(Math.random()*10));
+  	
+  	function handler1() {
+  		
+  		
+  		if (num/2 < 5){
+  		document.querySelector('h3').innerHTML='you picked color <div style="color:white; background-color:red;">RED</div>'
+  	    document.querySelector('.btn0').style.display='none'}
+  		else if(num/2>=5 && num/2<=10){
+  			document.querySelector('h3').innerHTML='you picked color <div style="color:white; background-color:blue;">BLUE</div>'
+  		    document.querySelector('.btn0').style.display='none'}
+  		else{
+  			document.querySelector('h3').innerHTML='you picked color <div style="color:white; background-color:green;">GREEN</div>'
+  			document.querySelector('.btn0').style.display='none'
+  		}
+  		
+  	}
+  </script>
+</body>
+</html>
