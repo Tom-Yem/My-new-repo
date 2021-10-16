@@ -1,1 +1,5 @@
-Contains two files, pongGame and a trick game!
+### Ping Pong Game
+
+![initial screen](./images/screen1.png)
+
+![playing screen](./images/screen2.png)
