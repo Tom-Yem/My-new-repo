@@ -1,202 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>toma</title>
-  <meta name='viewport' content='width=device-width,intial-scale=1.0'></meta>
-</head>
-<style>
- body{overflow:hidden;
-     background-color: black;}
- div{position:absolute;
-     background-color:white;
-     width:15px;
-     height:150px;}
-     
- .paddle1{left:0;
-          top:20px;}
- .paddle2{right:0;
-          top:80px;}
- .center{width:2px;
-        height:100%;
-        top:0;}
- .ball{background-color:blue;
-	     width:30px;
-       height:30px;
-       border-radius:50%;}       
- .scoreA,.scoreB{font-size:1.5em;
-                 background-color: black;
-                 color:white;
-                 width:30px;
-                 height:30px;
-                 text-align: center;}
- .label{width:50%;
-       height:100px;
-       font-size:5vw;
-       color: white;
-       background-color: black;}
+  <head>
+    <title>Ping Pong</title>
+    <meta name="viewport" content="width=device-width,intial-scale=1.0" />
+    <link rel="stylesheet" href="./pongGame.css" />
+  </head>
+  <body>
+    <div
+      class="paddle1"
+      ondragstart="return false"
+      onmousedown="onMousedown(event,this)"
+    ></div>
 
-</style>
-<body>
- <div class='paddle1' ondragstart="return false" onmousedown="onMousedown(event,this)"></div>
- 
- <div class='paddle2' ondragstart="return false" onmousedown="onMousedown(event,this)"></div>
- 
- <div class='center'></div>
+    <div
+      class="paddle2"
+      ondragstart="return false"
+      onmousedown="onMousedown(event,this)"
+    ></div>
 
- <div class='ball'></div>
+    <div class="center"></div>
 
- <div class='scoreA'>0</div>
+    <div class="ball"></div>
 
- <div class='scoreB'>0</div>
+    <div class="scoreA">0</div>
 
- <div class='label'>Press any key to start!</div>
+    <div class="scoreB">0</div>
 
- <script type="text/javascript">
- //positons and coordinates of elements...
- let centralWidth=document.documentElement.clientWidth/2;
- let centralHeight=document.documentElement.clientHeight/2;
- document.querySelector('.center').style.cssText=`left:${centralWidth}px;`
- 
- let ballStyle=getComputedStyle(document.querySelector('.ball'));
- let centeralLeftBall=(centralWidth)-(parseInt(ballStyle.width)/2)+'px';
- let centeralTopBall=(centralHeight)-(parseInt(ballStyle.height)/2)+'px';
- 
- document.querySelector('.ball').style.left=centeralLeftBall; 
- document.querySelector('.ball').style.top=centeralTopBall;
- 
- document.querySelector('.scoreA').style.left=(parseInt(centeralLeftBall)-30)+'px';
- document.querySelector('.scoreA').style.top=(parseInt(centeralTopBall)-30)+'px';
- document.querySelector('.scoreB').style.left=(parseInt(centeralLeftBall)+30)+'px';
- document.querySelector('.scoreB').style.top=(parseInt(centeralTopBall)-30)+'px';
- document.querySelector('.label').style.left=centralWidth/2 +'px';
- document.querySelector('.label').style.top=parseInt(centeralTopBall)/2 +'px';
+    <div class="label">Press any key to start!</div>
 
- </script>
+    <!-- positons and coordinates of elements... -->
+    <script src="coordinates.js"></script>
 
- <script type="text/javascript">
-    //both paddle movements...
+    <!-- both paddle movements... -->
+    <script src="paddlesMotion.js"></script>
 
-    function onMousedown(event,paddle){
-    
-    let shiftY=event.clientY-paddle.getBoundingClientRect().top;
-    
-    document.addEventListener('mousemove',onMouseMove);
-    document.addEventListener('mouseup',onMouseUp);
-
-    function onMouseMove(event){
-      let bottomEdge=document.documentElement.clientHeight-paddle.offsetHeight;
-      
-      let newTop=event.clientY-shiftY;
-
-      if (newTop>bottomEdge){newTop=bottomEdge;}
-      else if (newTop<0){newTop=0}
-      paddle.style.top=newTop+'px';
-    }
-
-    function onMouseUp(event){
-      document.removeEventListener('mousemove',onMouseMove);
-      document.removeEventListener('mouseup',onMouseUp);
-    }
-  }
-  </script>
-
-  <script type="text/javascript">
-    //ball movement...
-    class PongGame{
-      constructor(){
-        this.ball=document.querySelector('.ball');
-        this.paddle1=document.querySelector('.paddle1');
-        this.paddle2=document.querySelector('.paddle2');
-        this.scoreA=0;
-        this.scoreB=0;
-      }
-      load_ball(dir){
-        this.ball.style.left= centeralLeftBall;
-        this.ball.style.top= centeralTopBall;
-        this.Vx=5*dir;
-        this.Vy=-1.6;
-      }
-      move(){
-        this.ball.style.left = parseInt(this.ball.style.left) + this.Vx +'px';
-        this.ball.style.top = parseInt(this.ball.style.top) + this.Vy +'px';
-      }
-      strike_Paddle1(){
-        let ballCoords=this.ball.getBoundingClientRect();
-        let paddleCoords=this.paddle1.getBoundingClientRect();
-
-
-        if(ballCoords.left < paddleCoords.right){
-          let Lcollision=ballCoords.top > paddleCoords.top && ballCoords.top < paddleCoords.bottom;
-          let Ucollision=ballCoords.bottom > paddleCoords.top && ballCoords.bottom < paddleCoords.bottom;
-
-          if(Lcollision || Ucollision){
-            let ballCenter=ballCoords.bottom-(this.ball.offsetHeight/2);
-            let paddleCenter=paddleCoords.bottom-(this.paddle1.offsetHeight/2);
-            this.offset=(ballCenter-paddleCenter)/paddleCenter;
-            this.Vx=this.Vx*-1.1;
-            this.Vy=(1.1*this.Vy) + this.offset;
-          }  
-        }
-
-      }
-      strike_Paddle2(){
-        let ballCoords=this.ball.getBoundingClientRect();
-        let paddleCoords=this.paddle2.getBoundingClientRect();
-
-
-        if(ballCoords.right > paddleCoords.left){
-          let Lcollision=ballCoords.top > paddleCoords.top && ballCoords.top < paddleCoords.bottom;
-          let Ucollision=ballCoords.bottom > paddleCoords.top && ballCoords.bottom < paddleCoords.bottom;
-
-          if(Lcollision || Ucollision){
-            let ballCenter=ballCoords.bottom-(this.ball.offsetHeight/2);
-            let paddleCenter=paddleCoords.bottom-(this.paddle2.offsetHeight/2);
-            this.offset=(ballCenter-paddleCenter)/paddleCenter;
-            
-            this.Vx=this.Vx*-1.1;
-            this.Vy=(1.1*this.Vy) + this.offset;
-          }  
-        }
-
-      }
-      
-      update(){
-        this.move();
-
-        this.strike_Paddle1();
-        this.strike_Paddle2();
-        
-        let ballCoords=this.ball.getBoundingClientRect();
-        if(ballCoords.top < 0 || ballCoords.top > document.documentElement.clientHeight){
-          this.Vy=this.Vy*-1;
-          
-        }
-        if (ballCoords.left < 0){
-          this.scoreB += 1;
-          document.querySelector('.scoreB').innerHTML =`${this.scoreB}`;
-          this.load_ball(1);
-          
-        }
-        if (ballCoords.right > document.documentElement.clientWidth){
-          this.scoreA += 1;
-          document.querySelector('.scoreA').innerHTML=`${this.scoreA}`;
-          this.load_ball(-1);
-          
-        }
-      }
-    }
-    let start=function(){
-    let game=new PongGame();
-    game.load_ball(1);
-    let interval=setInterval(game.update.bind(game),1000/60);
-    document.querySelector('.label').remove();
-    document.removeEventListener('keydown',start);
-    }
-    document.addEventListener('keydown',start);
-    
-    
-    
-    
-  </script>
-</body>
+    <!-- ball movement... -->
+    <script src="ballMotion.js"></script>
+  </body>
 </html>

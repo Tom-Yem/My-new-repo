@@ -1,0 +1,46 @@
+body {
+  overflow: hidden;
+  background-color: black;
+}
+div {
+  position: absolute;
+  background-color: white;
+  width: 15px;
+  height: 150px;
+}
+
+.paddle1 {
+  left: 0;
+  top: 20px;
+}
+.paddle2 {
+  right: 0;
+  top: 80px;
+}
+.center {
+  width: 2px;
+  height: 100%;
+  top: 0;
+}
+.ball {
+  background-color: blue;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.scoreA,
+.scoreB {
+  font-size: 1.5em;
+  background-color: black;
+  color: white;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+.label {
+  width: 50%;
+  height: 100px;
+  font-size: 5vw;
+  color: white;
+  background-color: black;
+}
